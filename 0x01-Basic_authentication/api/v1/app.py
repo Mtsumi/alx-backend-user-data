@@ -3,13 +3,15 @@
 Route module for the API
 """
 
+import os
 from os import getenv
+from flask import Flask, jsonify, abort, request
+from flask_cors import (CORS, cross_origin)
+
 from api.v1.views import app_views
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
-from flask import Flask, jsonify, abort, request
-from flask_cors import (CORS, cross_origin)
-import os
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -45,6 +47,8 @@ def not_found(error) -> str:
 
 @app.before_request
 def validate_request():
+    """Authenticates a request before processing it.
+    """
     if auth:
         excluded_paths = [
             '/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'
