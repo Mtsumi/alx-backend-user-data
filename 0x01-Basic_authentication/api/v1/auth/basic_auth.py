@@ -78,10 +78,8 @@ class BasicAuth(Auth):
 
     #     return user
 
-    def user_object_from_credentials(
-            self,
-            user_email: str,
-            user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
         """Retrieves a user based on the user's authentication credentials.
         """
         if type(user_email) == str and type(user_pwd) == str:
@@ -103,4 +101,3 @@ class BasicAuth(Auth):
         auth_token = self.decode_base64_authorization_header(b64_auth_token)
         email, password = self.extract_user_credentials(auth_token)
         return self.user_object_from_credentials(email, password)
-
