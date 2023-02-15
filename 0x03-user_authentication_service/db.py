@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -43,3 +44,12 @@ class DB:
             user = None
             raise ValueError("Email already exists") from e
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """find users based on a set of kwargs
+        """
+        try:
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
+        except NoResultFound:
+            raise NoResultFound("No user with these credentials")
