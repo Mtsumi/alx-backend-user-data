@@ -53,3 +53,16 @@ class DB:
             return user
         except NoResultFound:
             raise NoResultFound("No user with these credentials")
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates user attributes based on the passed user ID
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+            for attr, value in kwargs.items():
+                if not hasattr(User, attr):
+                    raise ValueError(f'Invalid Atttribute: {attr}')
+                setattr(user, attr, value)
+            self.__session.commit()
+        except NoResultFound:
+            raise NoResultFound("User not found")
