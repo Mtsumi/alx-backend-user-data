@@ -97,7 +97,7 @@ class Auth:
                 return None
         return None
 
-    def destroy_session(self, user_id: int) -> None
+    def destroy_session(self, user_id: int) -> None:
         """Updates session ID to None
         """
         try:
