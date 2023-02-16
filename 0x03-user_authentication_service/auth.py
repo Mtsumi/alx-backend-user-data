@@ -6,7 +6,7 @@ from db import DB
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
 from typing import Union
-from uuid import uuid1
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> bytes:
@@ -62,7 +62,7 @@ class Auth:
     def _generate_uuid() -> str:
         """Returns a string representation of a new UUID
         """
-        return str(uuid1())
+        return str(uuid4())
 
     def create_session(self, email: str) -> str:
         """Create a new session ID for the user with the provided email.
