@@ -59,7 +59,7 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self) -> str:
+    def _generate_uuid() -> str:
         """Returns a string representation of a new UUID
         """
         return str(uuid1())
@@ -79,7 +79,7 @@ class Auth:
     """
         try:
             user = self._db.find_user_by(email=email)
-            new_session_id = self._generate_uuid()
+            new_session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=new_session_id)
             return new_session_id
         except NoResultFound:

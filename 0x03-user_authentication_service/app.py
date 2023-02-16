@@ -44,8 +44,7 @@ def login() -> str:
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
 
-        response = make_response(
-            jsonify({
+        response = make_response(jsonify({
                 'email': email,
                 'message': 'logged in'
             }))
@@ -57,7 +56,7 @@ def login() -> str:
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
-def logout() -> None:
+def logout() -> str:
     """DELETE /sessions
     Return:
         - Redirects to home route.
@@ -69,6 +68,17 @@ def logout() -> None:
         return redirect(url_for('index'))
     abort(403)
 
+@app.route("/profile", methods=["GET"], strict_slashes=False)
+def profile() -> str:
+    """GET /profile
+    Return:
+        - 200 HTTP status and a JSON payload
+    """
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id=session_id)
+    if user:
+        return jsonify({"email": "{user.email}"})
+    abort(403)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
