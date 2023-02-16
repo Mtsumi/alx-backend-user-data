@@ -14,6 +14,7 @@ def _hash_password(password: str) -> bytes:
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed_password
 
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -21,16 +22,16 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email:str, password:str) -> User:
+    def register_user(self, email: str, password: str) -> User:
         """Register a new user in the authentication database.
-        
+
         Args:
             email (str): The email of the user to register.
             password (str): The password of the user to register.
-        
+
         Returns:
             User: The newly created User object.
-        
+
         Raises:
             ValueError: If a user with the provided email already exists.
         """
