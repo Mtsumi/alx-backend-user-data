@@ -19,8 +19,8 @@ def index() -> str:
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/", methods=["POST"], strict_slashes=False)
-def register_user(email: str, password: str) -> str:
+@app.route("/users", methods=["POST"], strict_slashes=False)
+def register_user() -> str:
     """POST /users
     Return:
         - The account creation payload.
