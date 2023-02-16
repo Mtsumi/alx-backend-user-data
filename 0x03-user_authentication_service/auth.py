@@ -2,6 +2,7 @@
 """auth module
 """
 import bcrypt
+from uuid import uuid1
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -51,11 +52,11 @@ class Auth:
         """
         # user = None
         try:
-           user = self._db.find_user_by(email=email)
-           return bcrypt.checkpw(password.encode("utf-8"), user.hashed_password)
+            user = self._db.find_user_by(email=email)
+            return bcrypt.checkpw(password.encode("utf-8"),
+                                  user.hashed_password)
         except NoResultFound:
             return False
-        # return False
 
-
-
+    def _generate_uuid() -> str:
+        return str(uuid1())
