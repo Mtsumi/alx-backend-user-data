@@ -44,7 +44,8 @@ def login() -> str:
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
 
-        response = make_response(jsonify({
+        response = make_response(
+            jsonify({
                 'email': email,
                 'message': 'logged in'
             }))
@@ -68,6 +69,7 @@ def logout() -> str:
         return redirect(url_for('index'))
     abort(403)
 
+
 @app.route("/profile", methods=["GET"], strict_slashes=False)
 def profile() -> str:
     """GET /profile
@@ -79,6 +81,7 @@ def profile() -> str:
     if user:
         return jsonify({"email": "{user.email}"})
     abort(403)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
